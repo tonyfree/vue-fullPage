@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>test</title>
+</head>
+
+<body>
+  <!--<div id="app" @wheel="wheelEvent($event,3)">
+    <transition-group :name="name" tag="div">
+      <div v-for="(list,index) in sectionNum" :key="index" class="block" v-show="curIndex===index+1" @transitionend="end">
+        {{list}}</div>
+    </transition-group>
+  </div>-->
+  <div id="app">
+    <fullpage :pages="5" :bg-color="bgColor" base-bgc="green" :slots="slots">
+      <!--<div slot="slot1">
+        <hello></hello>
+      </div>
+      <div slot="slot3">
+        <hello></hello>
+      </div>-->
+
+      <hello v-for="num in 5" :slot="'slot'+num" ></hello>
+    </fullpage>
+  </div>
+</body>
+
+</html>
