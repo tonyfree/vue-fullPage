@@ -68,6 +68,17 @@
           }
           console.log('end:',this.canWheel)
         }
+      },
+      watch: {
+        canWheel() {
+          if(!this.canWheel){
+              setTimeout( () => {
+                if(this.curIndex > 1 && this.curIndex < this.pages){
+                  this.canWheel = true
+                }
+              },1000)
+          }
+        }
       }
     }
 </script>
