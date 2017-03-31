@@ -5,7 +5,6 @@
         :style="{'background-color':bgColor&&bgColor[index]?bgColor[index]:baseBgc}"
         v-show="curIndex===index+1" 
         @transitionend="end" >
-        {{page}}
           <slot v-for="slotIndex in pages" :name="'slot'+slotIndex" v-if="index+1==slotIndex"></slot>      
         </div>
       </transition-group>
@@ -69,17 +68,6 @@
           console.log('end:',this.canWheel)
         }
       },
-      watch: {
-        canWheel() {
-          if(!this.canWheel){
-              setTimeout( () => {
-                if(this.curIndex > 1 && this.curIndex < this.pages){
-                  this.canWheel = true
-                }
-              },1000)
-          }
-        }
-      }
     }
 </script>
 
