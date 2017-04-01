@@ -1,19 +1,36 @@
 <template>
   <div class="project-desc">
-    <span v-html="msg"></span>
+    <span v-html="code" v-for="code in codes"></span>
+    <span v-show="show">|</span>
   </div>
 </template>
 
 
 <script>
-  import TWEEN from 'tween.js'
   export default {
     data() {
       return {
-        msg: `VueProject<br>
-              {<br>
-                   return "tony"<br>
-              }`
+        msg: `VueProject`.split('').concat(['<br>','{','<br>']).concat(` return "tony"`.split('')).concat(['<br>','}']),
+        codes: [],
+        msgIndex: 0,
+        show: true
+      }
+    },
+    created() {
+      setInterval(this.addCodes,300)
+      let timer = setInterval(()=>{
+        this.show = !this.show
+        if(this.msgIndex === this.msg.length) {
+          this.show = false
+          clearInterval(timer)
+          timer = null
+        }
+      },60)
+    },
+    methods: {
+      addCodes() {
+        this.codes.push(this.msg[this.msgIndex])
+        this.msgIndex++
       }
     }
   }
