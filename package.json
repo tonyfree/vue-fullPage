@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "tween.js": "^16.6.0",
+    "velocity-animate": "^1.5.0",
     "vue": "^2.2.2"
   },
   "devDependencies": {

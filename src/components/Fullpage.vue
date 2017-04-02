@@ -1,17 +1,20 @@
 <template>
   <div  @wheel="wheelEvent($event)">
-      <transition-group :name="name" tag="div">
+      <transition-group :name="name" tag="div"  
+      v-on:enter="enter"
+      v-on:leave="leave">
         <div v-for="(page,index) in pages" :key="index" class="block" 
         :style="{'background-color':bgColor&&bgColor[index]?bgColor[index]:baseBgc}"
         v-show="curIndex===index+1" 
-        @transitionend="end" >
-          <slot v-for="slotIndex in pages" :name="'slot'+slotIndex" v-if="index+1==slotIndex"></slot>      
+        @transitionend="end">
+          <slot v-for="slotIndex in pages" :name="'slot'+slotIndex" 
+          v-if="index+1==slotIndex" :state="state"></slot>      
         </div>
       </transition-group>
   </div>
 </template>
 
-<script>
+<script>        
     export default {
       props: {
         pages:{
@@ -31,7 +34,8 @@
           curIndex: 1,
           name: 'down',
           canWheel: true,
-          endCount:0
+          endCount:0,
+          state: ''
         }
       },
       methods: {
@@ -64,10 +68,25 @@
           if(this.endCount === 2) {
             this.endCount = 0
             console.log('end')
+            this.state = 'transitionend' 
           }
           console.log('end:',this.canWheel)
+        },
+        // 此回调函数是可选项的设置
+        // 与 CSS 结合时使用
+        enter (el, done) {
+          console.log('enter')
+          // Velocity(el, { transform: 'translateY(0)' }, { duration: 1000 },{ complete: done })
+          this.state = 'enter' 
+        },
+        // 此回调函数是可选项的设置
+        // 与 CSS 结合时使用
+        leave(el, done) {
+          console.log('leave')
+          this.state = 'leave' 
+          // Velocity(el, { transform: 'translateY(-100%)' }, { duration: 1000 },{ complete: done })
         }
-      },
+      }
     }
 </script>
 

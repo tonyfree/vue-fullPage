@@ -9,14 +9,46 @@
 <body>
   <div id="app">
     <fullpage :pages="5" :bg-color="bgColor" base-bgc="green">
-      <div slot="slot1">
-        <page1></page1>
-      </div>
-      <div slot="slot2">
-        <page2></page2>
-      </div>
+     
+
+      <template slot="slot2" scope="props">
+        <page1 :state="props.state"></page1>
+      </template>
     </fullpage>
   </div>
+  <!--<div id="demo">
+    <button v-on:click="show = !show">
+    Toggle
+  </button>
+    <transition name="fade"  
+    v-on:before-enter="beforeEnter"
+  v-on:enter="enter"
+  v-on:after-enter="afterEnter"
+  v-on:enter-cancelled="enterCancelled"
+  v-on:before-leave="beforeLeave"
+  v-on:leave="leave"
+  v-on:after-leave="afterLeave"
+  v-on:leave-cancelled="leaveCancelled">
+      <p v-if="show">hello</p>
+    </transition>
+  </div>-->
+
+  <!--<div id="list-demo" class="demo">
+  <button v-on:click="add">Add</button>
+  <button v-on:click="remove">Remove</button>
+  <transition-group name="list" tag="p"  v-on:before-enter="beforeEnter"
+  v-on:enter="enter"
+  v-on:after-enter="afterEnter"
+  v-on:enter-cancelled="enterCancelled"
+  v-on:before-leave="beforeLeave"
+  v-on:leave="leave"
+  v-on:after-leave="afterLeave"
+  v-on:leave-cancelled="leaveCancelled">
+    <span v-for="item in items" v-bind:key="item" class="list-item">
+      {{ item }}
+    </span>
+  </transition-group>
+</div>-->
 </body>
 
 </html>
