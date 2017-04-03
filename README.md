@@ -15,6 +15,7 @@ baseBgc  | 默认背景色    |  String     | 不必要   | #fff |
 </template>
 ```
 必须按如下格式传递对应组件：对应屏的slot属性必须为slot+对应下标(从1开始)，要向slot分发的组件传递三个参数：state、index、page  
+  
  参数| 说明 |   值  | 
 ---------|------|-------|
 state| 对应过渡或动画的状态|enter、leave、transitionend   | 
