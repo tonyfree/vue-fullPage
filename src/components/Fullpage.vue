@@ -8,7 +8,7 @@
         v-show="curIndex===index+1" 
         @transitionend="end">
           <slot v-for="slotIndex in pages" :name="'slot'+slotIndex" 
-          v-if="index+1==slotIndex" :state="state"></slot>      
+          v-if="index+1==slotIndex" :state="state" :page="curIndex" :index="slotIndex"></slot>      
         </div>
       </transition-group>
   </div>
@@ -25,9 +25,8 @@
           type: Array
         },
         baseBgc:{
-          default: '#c90'
-        },
-        slots: {}
+          default: '#fff'
+        }
       },
       data() {
         return {
@@ -47,44 +46,37 @@
           if (e.deltaY > 0) {
             if (this.curIndex === this.pages) {
               this.canWheel = true
+              this.endCount = 0
               return
             }
             this.name = 'down'
             this.curIndex++
-          } else {
+          } 
+          if (e.deltaY < 0) {
             if (this.curIndex === 1) {
               this.canWheel = true
+              this.endCount = 0
               return
             }
             this.name = 'up'
             this.curIndex--
           }
-          console.log('wheel:',this.canWheel)
         },
         end() {   
-          this.canWheel = true
           this.endCount++;
-          console.log(this.endCount)
           if(this.endCount === 2) {
+            this.canWheel = true
             this.endCount = 0
-            console.log('end')
             this.state = 'transitionend' 
           }
-          console.log('end:',this.canWheel)
         },
-        // 此回调函数是可选项的设置
-        // 与 CSS 结合时使用
+        // 当只使用javasript过渡时，在enter和leave中，回调函数done是必须的，等元素的过渡或动画执行完毕后执行done回调
+        // 这里我们使用了css过渡，done可以不执行
         enter (el, done) {
-          console.log('enter')
-          // Velocity(el, { transform: 'translateY(0)' }, { duration: 1000 },{ complete: done })
           this.state = 'enter' 
         },
-        // 此回调函数是可选项的设置
-        // 与 CSS 结合时使用
         leave(el, done) {
-          console.log('leave')
           this.state = 'leave' 
-          // Velocity(el, { transform: 'translateY(-100%)' }, { duration: 1000 },{ complete: done })
         }
       }
     }

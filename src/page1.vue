@@ -1,56 +1,40 @@
 <template>
   <div class="project-desc">
     <span v-html="code" v-for="code in codes"></span>
-    <span v-show="show">|</span>
   </div>
 </template>
 
 <script>
   export default {
-    props:['state'],
+    props:['state','page','index'],
     data() {
       return {
         msg: `VueProject`.split('').concat(['<br>','{','<br>'],` return "tony"`.split(''),['<br>','}']),
         codes: [],
         msgIndex: 0,
-        show: true,
-        timer1: null,
-        timer2: null
+        timer: null
       }
     },
     methods: {
       addCodes() {
+        this.clear()
         this.codes.push(this.msg[this.msgIndex])
         this.msgIndex++
+      },
+      clear() {
+        if(this.msgIndex > this.msg.length - 1) {
+          clearInterval(this.timer)
+          this.timer = null
+        }
       }
     },
     watch: {
       state() {
-        if(this.state == 'enter') {
-          setTimeout(()=>{
-            this.timer2 = setInterval(this.addCodes,300)
-    
-            this.timer1 = setInterval(()=>{
-              this.show = !this.show
-              if(this.msgIndex === this.msg.length) {
-                this.show = false
-                clearInterval(this.timer1)
-                this.timer1 = null
-                clearInterval(this.timer2)
-                this.timer2 = null
-              }
-            },60)
-          },1000)  
-        }
-
-        if(this.state == 'leave') {
-           this.show = false
-                clearInterval(this.timer1)
-                this.timer1 = null
-                clearInterval(this.timer2)
-                this.timer2 = null
-                this.codes = []
-                this.msgIndex = 0
+        this.clear()
+        this.codes = []
+        this.msgIndex = 0
+        if( (this.state == 'enter'|| this.state == 'leave') &&this.page==this.index) {
+          this.timer = setInterval(this.addCodes,300)
         }
       }
     }
